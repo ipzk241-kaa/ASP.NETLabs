@@ -1,0 +1,24 @@
+﻿@model CoursesApp.Models.Chosen
+
+<h4>Вибрані курси</h4>
+
+@if (!Model.Items.Any())
+{
+    <p>Список вибраних курсів порожній.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var item in Model.Items)
+        {
+            <li class="list-group-item d-flex justify-content-between">
+                <span>@item.Title</span>
+                <a class="btn btn-sm btn-danger"
+                   asp-action="RemoveFromChosen"
+                   asp-route-courseId="@item.CourseID">Видалити</a>
+            </li>
+        }
+    </ul>
+
+    <a class="btn btn-warning mt-3" asp-action="ClearChosen">Очистити</a>
+}

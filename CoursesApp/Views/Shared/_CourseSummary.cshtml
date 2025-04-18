@@ -4,7 +4,14 @@
         <div class="card-body">
             <h5 class="card-title">@Model.Title</h5>
             <p class="card-text">@Model.Description</p>
-            <p class="text-muted">Ціна: <strong>@Model.Price</strong> грн</p>
+            <!--<p class="text-muted">Ціна: <strong>Model.Price</strong> грн</p>-->
+
+            <a class="btn btn-outline-primary btn-sm mt-2"
+               asp-controller="Chosen"
+               asp-action="AddToChosen"
+               asp-route-courseId="@Model.CourseID">
+                Додати до вибраного
+            </a>
         </div>
     </div>
 </div>

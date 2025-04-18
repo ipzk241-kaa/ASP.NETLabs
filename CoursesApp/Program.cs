@@ -1,5 +1,6 @@
 using CourseManagement.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +10,17 @@ builder.Services.AddDbContext<CourseDbContext>(opts => {
 });
 builder.Services.AddScoped<ICourseRepository, EFCourseRepository>();
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
 var app = builder.Build();
 
 app.UseStaticFiles();
+app.UseRouting();
+app.UseSession();
+app.UseAuthorization();
 app.MapDefaultControllerRoute();
 SeedData.EnsurePopulated(app);
 app.Run();
