@@ -1,0 +1,27 @@
+﻿@using CourseManagement.Models.ViewModels
+<h4>Ласкаво просимо до системи керування курсами</h4>
+@model CourseListViewModel
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var p in Model.Courses ?? Enumerable.Empty<Course>())
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@p.Title</h5>
+                    <p class="card-text">@p.Description</p>
+                    <p class="text-muted">Ціна: <strong>@p.Price</strong> грн</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<nav aria-label="Course pagination" class="mt-4">
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= Model.PagingInfo.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.PagingInfo.CurrentPage ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
