@@ -11,7 +11,9 @@
             <h1 class="h3">Система керування курсами</h1>
         </div>
     </header>
-
+    <div class="col-md-3">
+        @await Component.InvokeAsync("NavigationMenu")
+    </div>
     <div>
         @RenderBody()
     </div>

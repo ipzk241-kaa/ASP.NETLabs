@@ -9,12 +9,17 @@ public class HomeController : Controller
 
     public HomeController(ICourseRepository repo) => repository = repo;
 
-    public IActionResult Index(int page = 1)
+    public IActionResult Index(string? category, int page = 1)
     {
         var courses = repository.Courses
-            .OrderBy(c => c.CourseID)
-            .Skip((page - 1) * PageSize)
-            .Take(PageSize);
+        .Where(c => category == null || c.Category == category)
+        .OrderBy(c => c.CourseID)
+        .Skip((page - 1) * PageSize)
+        .Take(PageSize);
+
+        var totalItems = repository.Courses
+        .Where(c => category == null || c.Category == category)
+        .Count();
 
         var model = new CourseListViewModel
         {
@@ -23,8 +28,9 @@ public class HomeController : Controller
             {
                 CurrentPage = page,
                 ItemsPerPage = PageSize,
-                TotalItems = repository.Courses.Count()
-            }
+                TotalItems = totalItems
+            },
+            CurrentCategory = category
         };
 
         return View(model);
