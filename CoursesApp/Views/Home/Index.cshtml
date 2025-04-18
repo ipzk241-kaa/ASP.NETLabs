@@ -4,15 +4,7 @@
 <div class="row row-cols-1 row-cols-md-2 g-4">
     @foreach (var p in Model.Courses ?? Enumerable.Empty<Course>())
     {
-        <div class="col">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">@p.Title</h5>
-                    <p class="card-text">@p.Description</p>
-                    <p class="text-muted">Ціна: <strong>@p.Price</strong> грн</p>
-                </div>
-            </div>
-        </div>
+        <partial name="_CourseSummary" model="p" />
     }
 </div>
 <nav aria-label="Course pagination" class="mt-4">
