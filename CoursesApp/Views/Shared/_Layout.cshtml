@@ -11,12 +11,20 @@
             <h1 class="h3">Система керування курсами</h1>
         </div>
     </header>
-    <div class="col-md-3">
-        @await Component.InvokeAsync("NavigationMenu")
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                @await Component.InvokeAsync("NavigationMenu")
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        </div>
     </div>
-    <div>
-        @RenderBody()
-    </div>
+
+
     <footer class="bg-light text-center py-3 mt-4">
         <div class="container">
             <span>&copy; 2025 Система керування курсами</span>
