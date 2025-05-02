@@ -1,0 +1,10 @@
+﻿@model Course
+@{
+    ViewBag.Title = "Деталі курсу";
+}
+<h2>Деталі</h2>
+<p><strong>Назва:</strong> @Model.Title</p>
+<p><strong>Опис:</strong> @Model.Description</p>
+<p><strong>Категорія:</strong> @Model.Category</p>
+<p><strong>Викладач:</strong> @Model.Tea?.FullName</p>
+<a asp-action="Index">Назад</a>

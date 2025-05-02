@@ -1,0 +1,11 @@
+﻿@model Teacher
+@{
+    ViewBag.Title = "Підтвердження видалення";
+}
+<h2>Ви впевнені, що хочете видалити викладача?</h2>
+<p>@Model.FullName</p>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="TeacherID" />
+    <button type="submit">Так, видалити</button>
+    <a asp-action="Index">Скасувати</a>
+</form>

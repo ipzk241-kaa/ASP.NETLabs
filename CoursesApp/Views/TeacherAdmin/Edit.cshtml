@@ -1,0 +1,14 @@
+﻿@model Teacher
+@{
+    ViewBag.Title = Model.TeacherID == 0 ? "Додати викладача" : "Редагувати викладача";
+}
+<h2>@ViewBag.Title</h2>
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="TeacherID" />
+    <div>
+        <label>ПІБ</label>
+        <input asp-for="FullName" />
+        <span asp-validation-for="FullName"></span>
+    </div>
+    <button type="submit">Зберегти</button>
+</form>
