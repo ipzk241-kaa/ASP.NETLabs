@@ -8,5 +8,7 @@ namespace CourseManagement.Models
         public CourseDbContext(DbContextOptions<CourseDbContext> options) : base(options) { }
 
         public DbSet<Course> Courses => Set<Course>();
+        public DbSet<Teacher> Teachers => Set<Teacher>();
+
     }
 }

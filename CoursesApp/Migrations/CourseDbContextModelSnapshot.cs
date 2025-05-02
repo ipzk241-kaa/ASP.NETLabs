@@ -37,8 +37,8 @@ namespace CoursesApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(8, 2)");
+                    b.Property<long?>("TeacherID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -46,7 +46,40 @@ namespace CoursesApp.Migrations
 
                     b.HasKey("CourseID");
 
+                    b.HasIndex("TeacherID");
+
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("CoursesApp.Models.Teacher", b =>
+                {
+                    b.Property<long>("TeacherID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TeacherID"));
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TeacherID");
+
+                    b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("CoursesApp.Models.Course", b =>
+                {
+                    b.HasOne("CoursesApp.Models.Teacher", "Tea")
+                        .WithMany("Courses")
+                        .HasForeignKey("TeacherID");
+
+                    b.Navigation("Tea");
+                });
+
+            modelBuilder.Entity("CoursesApp.Models.Teacher", b =>
+                {
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

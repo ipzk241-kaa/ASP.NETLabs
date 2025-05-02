@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CoursesApp.Models
+﻿namespace CoursesApp.Models
 {
     public class Course
     {
@@ -12,5 +10,8 @@ namespace CoursesApp.Models
       //public decimal Price { get; set; }
 
         public string Category { get; set; } = string.Empty;
+
+        public long? TeacherID { get; set; }
+        public Teacher? Tea { get; set; }
     }
 }

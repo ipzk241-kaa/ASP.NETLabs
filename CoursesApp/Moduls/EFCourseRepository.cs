@@ -1,4 +1,5 @@
 ﻿using CoursesApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Models
 {
@@ -8,6 +9,6 @@ namespace CourseManagement.Models
 
         public EFCourseRepository(CourseDbContext ctx) => context = ctx;
 
-        public IQueryable<Course> Courses => context.Courses;
+        public IQueryable<Course> Courses => context.Courses.Include(c => c.Tea);
     }
 }
