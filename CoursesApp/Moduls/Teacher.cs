@@ -8,7 +8,7 @@ namespace CoursesApp.Models
     {
         public long TeacherID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введіть ПІБ")]
         public string FullName { get; set; } = string.Empty;
         [JsonIgnore]
         public ICollection<Course> Courses { get; set; } = new List<Course>();
