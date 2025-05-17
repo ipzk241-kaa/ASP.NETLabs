@@ -2,6 +2,7 @@
 using Courses.Domain.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using CoursesApi.Services;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -9,12 +10,16 @@ public class AuthController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly TokenService _tokenService;
+
 
     public AuthController(UserManager<ApplicationUser> userManager,
-                          SignInManager<ApplicationUser> signInManager)
+                           SignInManager<ApplicationUser> signInManager,
+                           TokenService tokenService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _tokenService = tokenService;
     }
 
     [HttpPost("register")]
@@ -42,8 +47,9 @@ public class AuthController : ControllerBase
     {
         var user = await _userManager.FindByNameAsync(model.UserName);
         if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
-            return Unauthorized();
+            return Unauthorized("Користувача не знайдено");
 
-        return Ok("Логін успішний");
+        var token = _tokenService.CreateToken(user);
+        return Ok(new { token });
     }
 }
