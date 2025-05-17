@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using CoursesApp.Moduls;
 
 namespace CourseManagement.Models
 {
@@ -11,6 +12,7 @@ namespace CourseManagement.Models
 
         public DbSet<Course> Courses => Set<Course>();
         public DbSet<Teacher> Teachers => Set<Teacher>();
+        public DbSet<UserCourse> UserCourses { get; set; }
 
     }
 }

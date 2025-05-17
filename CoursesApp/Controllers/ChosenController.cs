@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CoursesApp.Models;
 using CourseManagement.Models;
+using Microsoft.AspNetCore.Authorization;
+using CoursesApp.Moduls;
+using Microsoft.AspNetCore.Identity;
 
 namespace CoursesApp.Controllers
 {
@@ -43,5 +46,33 @@ namespace CoursesApp.Controllers
             Chosen.Clear();
             return RedirectToAction("ViewChosen");
         }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ConfirmChosen([FromServices] UserManager<ApplicationUser> userManager, [FromServices] CourseDbContext context)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var chosen = SessionChosen.GetChosen(HttpContext.RequestServices);
+
+            foreach (var course in chosen.Items)
+            {
+                if (!context.UserCourses.Any(uc => uc.UserId == user.Id && uc.CourseId == course.CourseID))
+                {
+                    context.UserCourses.Add(new UserCourse
+                    {
+                        UserId = user.Id,
+                        CourseId = (long)course.CourseID
+                    });
+                }
+            }
+
+            await context.SaveChangesAsync();
+            chosen.Clear();
+
+            return RedirectToAction("Profile", "Account");
+        }
+
     }
 }

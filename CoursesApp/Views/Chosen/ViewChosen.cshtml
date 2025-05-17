@@ -21,4 +21,10 @@ else
     </ul>
 
     <a class="btn btn-warning mt-3" asp-action="ClearChosen">Очистити</a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-action="ConfirmChosen" method="post">
+            <button class="btn btn-success">Підтвердити курси</button>
+        </form>
+    }
 }

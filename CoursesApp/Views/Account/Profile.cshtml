@@ -1,10 +1,22 @@
 ﻿@model CoursesApp.Moduls.ViewModels.UserProfileViewModel
-@{
-    ViewData["Title"] = "Особистий кабінет";
-}
+
 <h2>Особистий кабінет</h2>
 
-<div>
-    <p><strong>Ім’я користувача:</strong> @Model.UserName</p>
-    <p><strong>Email:</strong> @Model.Email</p>
-</div>
+<p><strong>Ім’я користувача:</strong> @Model.UserName</p>
+<p><strong>Email:</strong> @Model.Email</p>
+
+<h3>Ваші підтверджені курси</h3>
+
+@if (Model.Courses.Any())
+{
+    <ul>
+        @foreach (var course in Model.Courses)
+        {
+            <li>@course.Title</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Ви ще не підтвердили жодного курсу.</p>
+}

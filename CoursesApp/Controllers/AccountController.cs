@@ -85,15 +85,21 @@ namespace CoursesApp.Controllers
 
         //                      КАБІНЕТ
         [Authorize]
-        public async Task<IActionResult> Profile()
+        public async Task<IActionResult> Profile([FromServices] CourseDbContext context)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return RedirectToAction("Login");
 
+            var courses = context.UserCourses
+                                 .Where(uc => uc.UserId == user.Id)
+                                 .Select(uc => uc.Course!)
+                                 .ToList();
+
             var model = new UserProfileViewModel
             {
                 UserName = user.UserName,
-                Email = user.Email
+                Email = user.Email,
+                Courses = courses
             };
 
             return View(model);

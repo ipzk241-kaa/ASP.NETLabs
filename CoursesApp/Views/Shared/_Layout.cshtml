@@ -15,14 +15,14 @@
             <h1 class="h3">Система керування курсами</h1>
 
             <div>
+                <a class="btn btn-light btn-sm"
+                   asp-controller="Chosen"
+                   asp-action="ViewChosen">
+                    Вибране
+                </a>
                 
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <a class="btn btn-light btn-sm"
-                       asp-controller="Chosen"
-                       asp-action="ViewChosen">
-                        Вибране
-                    </a>
                     <a asp-controller="Account" asp-action="Profile" class="btn btn-light btn-sm me-2">Кабінет</a>
                     <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
                         <button type="submit" class="btn btn-outline-light btn-sm">Вийти</button>
