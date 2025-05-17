@@ -14,10 +14,12 @@
     <div>
         <label>Опис</label>
         <textarea asp-for="Description"></textarea>
+        <span asp-validation-for="Description"></span>
     </div>
     <div>
         <label>Категорія</label>
         <input asp-for="Category" />
+        <span asp-validation-for="Category"></span>
     </div>
     <div>
         <label>Викладач</label>
