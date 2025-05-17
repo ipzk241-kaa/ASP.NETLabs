@@ -1,7 +1,4 @@
-﻿using CourseManagement.Models;
-using CoursesApp.Models;
-
-namespace CoursesApp.Moduls
+﻿namespace Courses.Domain.Models
 {
     public class UserCourse
     {

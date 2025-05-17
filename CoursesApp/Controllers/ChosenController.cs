@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CoursesApp.Models;
-using CourseManagement.Models;
+using Courses.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
-using CoursesApp.Moduls;
+using Courses.Domain.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace CoursesApp.Controllers

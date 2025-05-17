@@ -1,7 +1,9 @@
-using CourseManagement.Models;
+using Courses.Domain.Models;
+using Courses.Domain.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using CourseManagement.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

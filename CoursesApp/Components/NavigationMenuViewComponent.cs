@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CourseManagement.Models;
-using CourseManagement.Models.ViewModels;
-using System.Linq;
+using Courses.Domain.Data;
 
 namespace CoursesApp.Components
 {

@@ -1,4 +1,5 @@
-﻿using CoursesApp.Models;
+﻿using Courses.Domain.Models;
+using Courses.Domain.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Models

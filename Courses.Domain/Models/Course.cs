@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace CoursesApp.Models
+namespace Courses.Domain.Models
 {
     public class Course
     {

@@ -1,8 +1,7 @@
-﻿using CoursesApp.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace CoursesApp.Models
+namespace Courses.Domain.Models
 {
     public class Teacher
     {

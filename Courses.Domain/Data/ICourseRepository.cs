@@ -1,6 +1,6 @@
-﻿using CoursesApp.Models;
+﻿using Courses.Domain.Models;
 
-namespace CourseManagement.Models
+namespace Courses.Domain.Data
 {
     public interface ICourseRepository
     {

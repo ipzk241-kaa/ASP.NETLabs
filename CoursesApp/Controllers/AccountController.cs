@@ -1,4 +1,5 @@
-﻿using CourseManagement.Models;
+﻿using Courses.Domain.Data;
+using Courses.Domain.Models;
 using CoursesApp.Moduls.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

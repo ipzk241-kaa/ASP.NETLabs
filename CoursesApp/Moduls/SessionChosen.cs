@@ -1,4 +1,4 @@
-﻿namespace CoursesApp.Models
+﻿namespace Courses.Domain.Models
 {
     public class SessionChosen : Chosen
     {

@@ -1,5 +1,5 @@
-﻿using CourseManagement.Models;
-using CoursesApp.Models;
+﻿using Courses.Domain.Data;
+using Courses.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

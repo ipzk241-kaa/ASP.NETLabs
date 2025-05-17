@@ -1,5 +1,5 @@
-﻿using CourseManagement.Models;
-using CoursesApp.Models;
+﻿using Courses.Domain.Models;
+using Courses.Domain.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoursesApp.Controllers

@@ -1,7 +1,7 @@
-﻿using CoursesApp.Models;
+﻿using Courses.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CourseManagement.Models
+namespace Courses.Domain.Data
 {
     public class EFCourseRepository : ICourseRepository
     {

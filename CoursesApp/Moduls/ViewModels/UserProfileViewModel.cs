@@ -1,4 +1,4 @@
-﻿using CoursesApp.Models;
+﻿using Courses.Domain.Models;
 
 namespace CoursesApp.Moduls.ViewModels
 {

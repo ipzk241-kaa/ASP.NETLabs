@@ -1,4 +1,4 @@
-﻿using CourseManagement.Models;
+﻿using Courses.Domain.Data;
 using CourseManagement.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
