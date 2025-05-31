@@ -95,12 +95,17 @@ namespace CoursesApp.Controllers
                                  .Where(uc => uc.UserId == user.Id)
                                  .Select(uc => uc.Course!)
                                  .ToList();
-
+            var categories = context.Courses
+                .Select(c => c.Category)
+                .Where(c => !string.IsNullOrEmpty(c))
+                .Distinct()
+                .ToList();
             var model = new UserProfileViewModel
             {
                 UserName = user.UserName,
                 Email = user.Email,
-                Courses = courses
+                Courses = courses,
+                Categories = categories
             };
 
             return View(model);

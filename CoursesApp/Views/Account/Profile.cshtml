@@ -20,3 +20,48 @@ else
 {
     <p>Ви ще не підтвердили жодного курсу.</p>
 }
+<h3>Підписка на категорії курсів</h3>
+<form id="category-form">
+    @foreach (var category in Model.Categories)
+    {
+        <div>
+            <input type="checkbox" class="category-checkbox" id="@category" value="@category" />
+            <label for="@category">@category</label>
+        </div>
+    }
+</form>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/coursesHub")
+            .build();
+
+        connection.on("ReceiveNewCourse", function (courseName) {
+            alert("Новий курс у вибраній категорії: " + courseName);
+        });
+
+        connection.start().then(function () {
+            console.log("Підключено до SignalR");
+
+            document.querySelectorAll(".category-checkbox").forEach(cb => {
+                if (cb.checked) {
+                    connection.invoke("SubscribeCategory", cb.value);
+                }
+
+                cb.addEventListener("change", function () {
+                    if (cb.checked) {
+                        connection.invoke("SubscribeCategory", cb.value);
+                        console.log("Підписався на:", cb.value);
+                    } else {
+                        connection.invoke("UnsubscribeCategory", cb.value);
+                        console.log("Відписався від:", cb.value);
+                    }
+                });
+            });
+        }).catch(function (err) {
+            console.error(err.toString());
+        });
+    </script>
+}

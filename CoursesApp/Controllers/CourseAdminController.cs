@@ -1,17 +1,21 @@
 ﻿using Courses.Domain.Data;
 using Courses.Domain.Models;
+using CoursesApp.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 
 namespace CoursesApp.Controllers
 {
     public class CourseAdminController : Controller
     {
         private ICourseRepository repository;
+        private IHubContext<CoursesHub> hubContext;
 
-        public CourseAdminController(ICourseRepository repo)
+        public CourseAdminController(ICourseRepository repo, IHubContext<CoursesHub> hub)
         {
             repository = repo;
+            hubContext = hub;
         }
 
         public IActionResult Index() => View(repository.Courses);
@@ -30,11 +34,12 @@ namespace CoursesApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Course course)
+        public async Task<IActionResult> Create(Course course)
         {
             if (ModelState.IsValid)
             {
                 repository.CreateCourse(course);
+                await hubContext.Clients.Group(course.Category).SendAsync("ReceiveNewCourse", course.Title);
                 return RedirectToAction("Index");
             }
             ViewBag.Teachers = new SelectList(repository.Teachers, "TeacherID", "FullName");

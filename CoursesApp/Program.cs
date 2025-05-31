@@ -32,9 +32,11 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = "/Account/Logout";
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
+app.MapHub<CoursesApp.Infrastructure.CoursesHub>("/coursesHub");
 app.UseStaticFiles();
 app.UseRouting();
 app.UseCors(builder => builder
