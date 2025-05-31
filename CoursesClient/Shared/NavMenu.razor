@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager Navigation
+@inject AuthService AuthService
+@inject AuthenticationStateProvider AuthProvider
+
+<CascadingAuthenticationState>
+    <div class="top-row px-4 auth-nav">
+        <a href="" class="navbar-brand">📘 Courses App</a>
+
+        <AuthorizeView>
+            <Authorized>
+                <span class="me-2">👤 @context.User.Identity?.Name</span>
+                <button class="btn btn-outline-danger btn-sm" @onclick="Logout">Logout</button>
+            </Authorized>
+            <NotAuthorized>
+                <button class="btn btn-outline-primary btn-sm" @onclick="NavigateToLogin">Login</button>
+                @code {
+                    void NavigateToLogin()
+                    {
+                        Navigation.NavigateTo("/login");
+                    }
+                    }
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+
+    <nav class="nav flex-column px-4">
+        <NavLink href="" Match="NavLinkMatch.All">🏠 Home</NavLink>
+        <NavLink href="/courses">📚 Courses</NavLink>
+        <AuthorizeView>
+            <Authorized>
+                <NavLink href="/courses/create">➕ Add Course</NavLink>
+            </Authorized>
+        </AuthorizeView>
+    </nav>
+</CascadingAuthenticationState>
+
+@code {
+    private async Task Logout()
+    {
+        await AuthService.Logout();
+    }
+}

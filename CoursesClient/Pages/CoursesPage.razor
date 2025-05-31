@@ -1,0 +1,114 @@
+﻿@page "/courses"
+@inject HttpClient Http
+@inject IJSRuntime JS
+
+@using Courses.Domain.Models
+
+<h3>Список курсів</h3>
+
+@if (courses is null)
+{
+    <p>Завантаження...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Назва</th>
+                <th>Категорія</th>
+                <th>Опис</th>
+                <th>Викладач</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in courses)
+            {
+                <tr>
+                    <td>@course.Title</td>
+                    <td>@course.Category</td>
+                    <td>@course.Description</td>
+                    <td>@course.Tea?.FullName</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" @onclick="() => DeleteCourse(course.CourseID!.Value)">Видалити</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h4>Додати курс</h4>
+<EditForm Model="newCourse" OnValidSubmit="AddCourse">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-2">
+        <InputText class="form-control" @bind-Value="newCourse.Title" placeholder="Назва курсу" />
+    </div>
+    <div class="mb-2">
+        <InputText class="form-control" @bind-Value="newCourse.Description" placeholder="Опис" />
+    </div>
+    <div class="mb-2">
+        <InputText class="form-control" @bind-Value="newCourse.Category" placeholder="Категорія" />
+    </div>
+    <div class="mb-2">
+        <InputSelect class="form-control" @bind-Value="newCourse.TeacherID">
+            <option value="">-- Оберіть викладача --</option>
+            @foreach (var t in teachers)
+            {
+                <option value="@t.TeacherID">@t.FullName</option>
+            }
+        </InputSelect>
+    </div>
+
+    <button class="btn btn-success" type="submit">Додати</button>
+</EditForm>
+
+@code {
+    private List<Course>? courses;
+    private Course newCourse = new();
+    private List<Teacher> teachers = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCourses();
+        await LoadTeachers();
+    }
+
+    private async Task LoadCourses()
+    {
+        courses = await Http.GetFromJsonAsync<List<Course>>("courses");
+    }
+
+    private async Task LoadTeachers()
+    {
+        teachers = await Http.GetFromJsonAsync<List<Teacher>>("teachers");
+    }
+
+    private async Task AddCourse()
+    {
+        var token = await JS.InvokeAsync<string>("localStorage.getItem", "authToken");
+        Http.DefaultRequestHeaders.Authorization = new("Bearer", token);
+
+        var response = await Http.PostAsJsonAsync("courses", newCourse);
+        if (response.IsSuccessStatusCode)
+        {
+            newCourse = new();
+            await LoadCourses();
+        }
+    }
+
+    private async Task DeleteCourse(long id)
+    {
+        var token = await JS.InvokeAsync<string>("localStorage.getItem", "authToken");
+        Http.DefaultRequestHeaders.Authorization = new("Bearer", token);
+
+        var response = await Http.DeleteAsync($"courses/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            await LoadCourses();
+        }
+    }
+}

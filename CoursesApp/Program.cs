@@ -37,6 +37,10 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 app.UseSession();
 app.UseAuthorization();
 app.MapControllerRoute(

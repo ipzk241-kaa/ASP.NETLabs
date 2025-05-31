@@ -1,0 +1,24 @@
+﻿@using CoursesClient.Pages
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
+    <Found Context="routeData">
+        @if (routeData.PageType == typeof(Login) || routeData.PageType == typeof(Register))
+        {
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        }
+        else
+        {
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <p>Ви не авторизовані. Будь ласка, увійдіть.</p>
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        }
+    </Found>
+    <NotFound>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p>Сторінку не знайдено.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+</CascadingAuthenticationState>

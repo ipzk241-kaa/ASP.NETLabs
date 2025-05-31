@@ -1,0 +1,59 @@
+﻿@page "/register"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+@using Courses.Domain.DTOs
+@using Microsoft.AspNetCore.Components.Forms
+
+<EditForm Model="registerModel" OnValidSubmit="HandleRegister">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Ім’я користувача</label>
+        <InputText @bind-value="registerModel.UserName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <InputText @bind-value="registerModel.Email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Пароль</label>
+        <InputPassword @bind="registerModel.Password" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Підтвердіть пароль</label>
+        <InputPassword @bind="registerModel.ConfirmPassword" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Зареєструватися</button>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-info mt-3">@message</div>
+}
+
+@code {
+    private RegisterDto registerModel = new();
+    private string? message;
+
+    private async Task HandleRegister()
+    {
+        var response = await Http.PostAsJsonAsync("auth/register", registerModel);
+        if (response.IsSuccessStatusCode)
+        {
+            message = "Реєстрація успішна! Перенаправлення на вхід...";
+            await Task.Delay(1500);
+            Navigation.NavigateTo("/login");
+        }
+        else
+        {
+            message = await response.Content.ReadAsStringAsync();
+        }
+    }
+}

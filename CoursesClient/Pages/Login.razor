@@ -1,0 +1,44 @@
+﻿@page "/login"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+@inject AuthService AuthService
+
+
+@using Courses.Domain.DTOs
+@using Microsoft.AspNetCore.Components.Forms
+
+<EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Ім’я користувача</label>
+        <InputText @bind-value="loginModel.UserName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Пароль</label>
+        <InputPassword @bind="loginModel.Password" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Увійти</button>
+</EditForm>
+
+@code {
+    private LoginDto loginModel = new LoginDto();
+    private string errorMessage = "";
+
+    private async Task HandleLogin()
+    {
+        var result = await AuthService.Login(loginModel);
+        if (result)
+        {
+            Navigation.NavigateTo("/courses");
+        }
+        else
+        {
+            errorMessage = "Невірне ім'я користувача або пароль";
+        }
+    }
+}
